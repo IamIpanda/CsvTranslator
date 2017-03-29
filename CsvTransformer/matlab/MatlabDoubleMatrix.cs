@@ -7,19 +7,35 @@ namespace CsvTransformer.matlab
 {
     class MatlabDoubleMatrix : IMatlabStructure
     {
+        public MatlabDoubleMatrix(List<List<double>> value)
+        {
+            Value = value;
+        }
+
+        public MatlabDoubleMatrix(List<double> value)
+        {
+            Value = new List<List<double>> {value};
+        }
+
+        public MatlabDoubleMatrix(double value)
+        {
+            Value = new List<List<double>> {new List<double> {value}};
+        }
+
         public override int Type => 9;
 
         public override int InnerLength => Value.Count * 8;
 
         public override int AllLength => InnerLength + 8;
 
-        public List<Double> Value { get; set; }
+        public List<List<double>> Value { get; set; }
 
         public override void WriteToStream(BinaryWriter writer)
         {
             WriteStreamTagHeader(writer);
-            foreach (var d in Value)
-                writer.Write(d);
+            foreach (var l in Value)
+                foreach (var d in l)
+                    writer.Write(d);
         }
     }
 }
