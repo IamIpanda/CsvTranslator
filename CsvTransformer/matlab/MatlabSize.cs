@@ -7,6 +7,12 @@ namespace CsvTransformer.matlab
 {
     class MatlabSize : IMatlabStructure
     {
+        public MatlabSize(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
+
         public override int Type => 5;
 
         public override int InnerLength => 8;

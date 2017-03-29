@@ -28,44 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.pb_all = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bt_start = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.cb_keep_left = new System.Windows.Forms.CheckBox();
+            this.cb_keep_time = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nud_line_start = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.nud_row_start = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cb_merge_file = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tb_data_name = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.clb_files = new System.Windows.Forms.CheckedListBox();
+            this.tb_csv_dir = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.bt_check_all = new System.Windows.Forms.Button();
+            this.bt_uncheck_all = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_file_filter = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.cb_reg = new System.Windows.Forms.CheckBox();
+            this.lb_data = new System.Windows.Forms.Label();
+            this.sfd = new System.Windows.Forms.SaveFileDialog();
+            this.fbd = new System.Windows.Forms.FolderBrowserDialog();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_line_start)).BeginInit();
             this.flowLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_row_start)).BeginInit();
+            this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
@@ -76,16 +83,16 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.57143F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.42857F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.progressBar1, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.progressBar2, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.pb_all, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.bt_start, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkedListBox1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.clb_files, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tb_csv_dir, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel3, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.lb_data, 1, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -112,23 +119,14 @@
             this.label1.Text = "CSV文件夹";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // progressBar1
+            // pb_all
             // 
-            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBar1.Enabled = false;
-            this.progressBar1.Location = new System.Drawing.Point(76, 577);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(219, 18);
-            this.progressBar1.TabIndex = 1;
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBar2.Enabled = false;
-            this.progressBar2.Location = new System.Drawing.Point(76, 601);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(219, 18);
-            this.progressBar2.TabIndex = 2;
+            this.pb_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_all.Enabled = false;
+            this.pb_all.Location = new System.Drawing.Point(76, 601);
+            this.pb_all.Name = "pb_all";
+            this.pb_all.Size = new System.Drawing.Size(219, 18);
+            this.pb_all.TabIndex = 2;
             // 
             // label2
             // 
@@ -154,16 +152,18 @@
             this.label3.Text = "总进度";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // bt_start
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.button1, 2);
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(3, 547);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(292, 24);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "开始";
-            this.button1.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.bt_start, 2);
+            this.bt_start.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bt_start.Enabled = false;
+            this.bt_start.Location = new System.Drawing.Point(3, 547);
+            this.bt_start.Name = "bt_start";
+            this.bt_start.Size = new System.Drawing.Size(292, 24);
+            this.bt_start.TabIndex = 6;
+            this.bt_start.Text = "开始";
+            this.bt_start.UseVisualStyleBackColor = true;
+            this.bt_start.Click += new System.EventHandler(this.bt_start_Click);
             // 
             // groupBox1
             // 
@@ -182,13 +182,15 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.checkBox1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.checkBox2, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cb_keep_left, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cb_keep_time, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel1, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel2, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.checkBox3, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cb_merge_file, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 17);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -198,33 +200,33 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(286, 94);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // checkBox1
+            // cb_keep_left
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox1.Location = new System.Drawing.Point(3, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(137, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "保留左侧信息";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cb_keep_left.AutoSize = true;
+            this.cb_keep_left.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cb_keep_left.Location = new System.Drawing.Point(3, 3);
+            this.cb_keep_left.Name = "cb_keep_left";
+            this.cb_keep_left.Size = new System.Drawing.Size(137, 17);
+            this.cb_keep_left.TabIndex = 0;
+            this.cb_keep_left.Text = "保留左侧信息";
+            this.cb_keep_left.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // cb_keep_time
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox2.Location = new System.Drawing.Point(3, 26);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(137, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "保留时间信息";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cb_keep_time.AutoSize = true;
+            this.cb_keep_time.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cb_keep_time.Location = new System.Drawing.Point(3, 26);
+            this.cb_keep_time.Name = "cb_keep_time";
+            this.cb_keep_time.Size = new System.Drawing.Size(137, 17);
+            this.cb_keep_time.TabIndex = 1;
+            this.cb_keep_time.Text = "保留时间信息";
+            this.cb_keep_time.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.flowLayoutPanel1, 2);
             this.flowLayoutPanel1.Controls.Add(this.label4);
-            this.flowLayoutPanel1.Controls.Add(this.numericUpDown1);
+            this.flowLayoutPanel1.Controls.Add(this.nud_line_start);
             this.flowLayoutPanel1.Controls.Add(this.label6);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 46);
@@ -244,13 +246,13 @@
             this.label4.Text = "数据从第";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // numericUpDown1
+            // nud_line_start
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(62, 3);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(82, 21);
-            this.numericUpDown1.TabIndex = 1;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.nud_line_start.Location = new System.Drawing.Point(62, 3);
+            this.nud_line_start.Name = "nud_line_start";
+            this.nud_line_start.Size = new System.Drawing.Size(82, 21);
+            this.nud_line_start.TabIndex = 1;
+            this.nud_line_start.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -271,7 +273,7 @@
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.flowLayoutPanel2, 2);
             this.flowLayoutPanel2.Controls.Add(this.label5);
-            this.flowLayoutPanel2.Controls.Add(this.numericUpDown2);
+            this.flowLayoutPanel2.Controls.Add(this.nud_row_start);
             this.flowLayoutPanel2.Controls.Add(this.label7);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 69);
@@ -291,13 +293,13 @@
             this.label5.Text = "数据从第";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // numericUpDown2
+            // nud_row_start
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(62, 3);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(82, 21);
-            this.numericUpDown2.TabIndex = 1;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.nud_row_start.Location = new System.Drawing.Point(62, 3);
+            this.nud_row_start.Name = "nud_row_start";
+            this.nud_row_start.Size = new System.Drawing.Size(82, 21);
+            this.nud_row_start.TabIndex = 1;
+            this.nud_row_start.Value = new decimal(new int[] {
             3,
             0,
             0,
@@ -314,36 +316,69 @@
             this.label7.Text = "列开始";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // checkBox3
+            // cb_merge_file
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox3.Location = new System.Drawing.Point(146, 3);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(137, 17);
-            this.checkBox3.TabIndex = 4;
-            this.checkBox3.Text = "合并文件";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.cb_merge_file.AutoSize = true;
+            this.cb_merge_file.Checked = true;
+            this.cb_merge_file.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_merge_file.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cb_merge_file.Location = new System.Drawing.Point(146, 3);
+            this.cb_merge_file.Name = "cb_merge_file";
+            this.cb_merge_file.Size = new System.Drawing.Size(137, 17);
+            this.cb_merge_file.TabIndex = 4;
+            this.cb_merge_file.Text = "合并文件";
+            this.cb_merge_file.UseVisualStyleBackColor = true;
             // 
-            // checkedListBox1
+            // panel1
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.checkedListBox1, 2);
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(3, 147);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(292, 334);
-            this.checkedListBox1.TabIndex = 8;
+            this.panel1.Controls.Add(this.tb_data_name);
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Location = new System.Drawing.Point(143, 23);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(143, 23);
+            this.panel1.TabIndex = 5;
             // 
-            // textBox1
+            // tb_data_name
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(76, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(219, 21);
-            this.textBox1.TabIndex = 9;
+            this.tb_data_name.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_data_name.Location = new System.Drawing.Point(58, 0);
+            this.tb_data_name.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.tb_data_name.Name = "tb_data_name";
+            this.tb_data_name.Size = new System.Drawing.Size(85, 21);
+            this.tb_data_name.TabIndex = 1;
+            this.tb_data_name.Text = "Data";
+            this.tb_data_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label10
+            // 
+            this.label10.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label10.Location = new System.Drawing.Point(0, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(58, 23);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "数据名为";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // clb_files
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.clb_files, 2);
+            this.clb_files.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clb_files.FormattingEnabled = true;
+            this.clb_files.Location = new System.Drawing.Point(3, 147);
+            this.clb_files.Name = "clb_files";
+            this.clb_files.Size = new System.Drawing.Size(292, 334);
+            this.clb_files.TabIndex = 8;
+            this.clb_files.MouseUp += new System.Windows.Forms.MouseEventHandler(this.clb_files_MouseUp);
+            // 
+            // tb_csv_dir
+            // 
+            this.tb_csv_dir.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_csv_dir.Location = new System.Drawing.Point(76, 3);
+            this.tb_csv_dir.Name = "tb_csv_dir";
+            this.tb_csv_dir.Size = new System.Drawing.Size(219, 21);
+            this.tb_csv_dir.TabIndex = 9;
+            this.tb_csv_dir.TextChanged += new System.EventHandler(this.tb_csv_dir_TextChanged);
             // 
             // tableLayoutPanel3
             // 
@@ -351,8 +386,8 @@
             this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel3, 2);
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.button2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button3, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.bt_check_all, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.bt_uncheck_all, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 484);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -363,33 +398,35 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(298, 30);
             this.tableLayoutPanel3.TabIndex = 10;
             // 
-            // button2
+            // bt_check_all
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(3, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(143, 24);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "全选";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bt_check_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bt_check_all.Location = new System.Drawing.Point(3, 3);
+            this.bt_check_all.Name = "bt_check_all";
+            this.bt_check_all.Size = new System.Drawing.Size(143, 24);
+            this.bt_check_all.TabIndex = 0;
+            this.bt_check_all.Text = "全选";
+            this.bt_check_all.UseVisualStyleBackColor = true;
+            this.bt_check_all.Click += new System.EventHandler(this.bt_check_all_Click);
             // 
-            // button3
+            // bt_uncheck_all
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(152, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(143, 24);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "全不选";
-            this.button3.UseVisualStyleBackColor = true;
+            this.bt_uncheck_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bt_uncheck_all.Location = new System.Drawing.Point(152, 3);
+            this.bt_uncheck_all.Name = "bt_uncheck_all";
+            this.bt_uncheck_all.Size = new System.Drawing.Size(143, 24);
+            this.bt_uncheck_all.TabIndex = 1;
+            this.bt_uncheck_all.Text = "全不选";
+            this.bt_uncheck_all.UseVisualStyleBackColor = true;
+            this.bt_uncheck_all.Click += new System.EventHandler(this.bt_uncheck_all_Click);
             // 
             // flowLayoutPanel3
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.flowLayoutPanel3, 2);
             this.flowLayoutPanel3.Controls.Add(this.label8);
-            this.flowLayoutPanel3.Controls.Add(this.textBox2);
+            this.flowLayoutPanel3.Controls.Add(this.tb_file_filter);
             this.flowLayoutPanel3.Controls.Add(this.label9);
-            this.flowLayoutPanel3.Controls.Add(this.checkBox4);
+            this.flowLayoutPanel3.Controls.Add(this.cb_reg);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 514);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -408,12 +445,13 @@
             this.label8.Text = "选中所有形如";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox2
+            // tb_file_filter
             // 
-            this.textBox2.Location = new System.Drawing.Point(86, 3);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 21);
-            this.textBox2.TabIndex = 1;
+            this.tb_file_filter.Location = new System.Drawing.Point(86, 3);
+            this.tb_file_filter.Name = "tb_file_filter";
+            this.tb_file_filter.Size = new System.Drawing.Size(100, 21);
+            this.tb_file_filter.TabIndex = 1;
+            this.tb_file_filter.Text = "*.csv";
             // 
             // label9
             // 
@@ -426,21 +464,32 @@
             this.label9.Text = "的文件";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // checkBox4
+            // cb_reg
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.checkBox4.Location = new System.Drawing.Point(239, 3);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(48, 21);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "正则";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.cb_reg.AutoSize = true;
+            this.cb_reg.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cb_reg.Location = new System.Drawing.Point(239, 3);
+            this.cb_reg.Name = "cb_reg";
+            this.cb_reg.Size = new System.Drawing.Size(48, 21);
+            this.cb_reg.TabIndex = 3;
+            this.cb_reg.Text = "正则";
+            this.cb_reg.UseVisualStyleBackColor = true;
             // 
-            // openFileDialog1
+            // lb_data
             // 
-            this.openFileDialog1.FileName = "matlab.msv";
-            this.openFileDialog1.Filter = "Matlab数据文件|*.msv|所有文件|*.*";
+            this.lb_data.AutoSize = true;
+            this.lb_data.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_data.Location = new System.Drawing.Point(76, 577);
+            this.lb_data.Margin = new System.Windows.Forms.Padding(3);
+            this.lb_data.Name = "lb_data";
+            this.lb_data.Size = new System.Drawing.Size(219, 18);
+            this.lb_data.TabIndex = 12;
+            this.lb_data.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timer
+            // 
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // Form1
             // 
@@ -448,6 +497,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(298, 622);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -462,10 +512,12 @@
             this.tableLayoutPanel2.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_line_start)).EndInit();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_row_start)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
@@ -477,35 +529,40 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.ProgressBar pb_all;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bt_start;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckedListBox clb_files;
+        private System.Windows.Forms.TextBox tb_csv_dir;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox cb_keep_left;
+        private System.Windows.Forms.CheckBox cb_keep_time;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nud_line_start;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown nud_row_start;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox cb_merge_file;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button bt_check_all;
+        private System.Windows.Forms.Button bt_uncheck_all;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_file_filter;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.CheckBox cb_reg;
+        private System.Windows.Forms.SaveFileDialog sfd;
+        private System.Windows.Forms.FolderBrowserDialog fbd;
+        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Label lb_data;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox tb_data_name;
+        private System.Windows.Forms.Label label10;
     }
 }
 

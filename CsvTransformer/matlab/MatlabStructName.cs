@@ -7,6 +7,11 @@ namespace CsvTransformer.matlab
 {
     class MatlabStructName : IMatlabStructure
     {
+        public MatlabStructName(string value)
+        {
+            Value = value;
+        }
+
         public override int Type => 1;
 
         public string Value { get; set; }
