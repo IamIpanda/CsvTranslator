@@ -42,7 +42,7 @@ namespace CsvTransformer.csv
         {
             var line = reader.ReadLine();
             var parts = line?.Split(',');
-            return parts?.Where((part, i) => i >= start_column).Select(part => Convert.ToDouble(part)).ToList();
+            return parts?.Where((part, i) => i > start_column).Select(part => Convert.ToDouble(part)).ToList();
         }
     }
 }

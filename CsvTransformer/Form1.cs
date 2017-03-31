@@ -230,7 +230,7 @@ namespace CsvTransformer
 
         private void cb_keep_time_CheckedChanged(object sender, EventArgs e)
         {
-            nud_row_start.Value = cb_keep_time.Checked ? 3 : 4;
+            nud_row_start.Value = cb_keep_time.Checked ? 4 : 5;
         }
     }
 }
