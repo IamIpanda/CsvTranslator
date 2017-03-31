@@ -9,46 +9,46 @@ using CsvTransformer.matlab;
 
 namespace CsvTransformer
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var stream = new FileStream("hello.mat", FileMode.Create);
-            var writer = new MatlabWriter(stream);
-            writer.WriteHead();
-            var Struct = new MatlabStructuredMatrix
-            {
-                Name = new MatlabStructName("FuckMatlab"),
-                Size = new MatlabSize(3, 4),
-                Value = new MatlabDoubleMatrix(new List<double> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20})
-            };
-            writer.Write(Struct);
-            writer.Close();
+            //var stream = new FileStream("hello.mat", FileMode.Create);
+            //var writer = new MatlabWriter(stream);
+            //writer.WriteHead();
+            //var Struct = new MatlabStructuredMatrix
+            //{
+            //    Name = new MatlabStructName("FuckMatlab"),
+            //    Size = new MatlabSize(3, 4),
+            //    Value = new MatlabDoubleMatrix(new List<double> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20})
+            //};
+            //writer.Write(Struct);
+            //writer.Close();
         }
 
         private void bt_check_all_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < clb_files.Items.Count; i++)
                 clb_files.SetItemChecked(i, true);
-            SetStartButtonState();
+            bt_start.Enabled = clb_files.Items.Count > 0;
         }
 
         private void bt_uncheck_all_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < clb_files.Items.Count; i++)
                 clb_files.SetItemChecked(i, false);
-            SetStartButtonState();
+            bt_start.Enabled = false;
         }
 
         private void tb_csv_dir_TextChanged(object sender, EventArgs e)
         {
             SetCheckedListBox();
-            SetStartButtonState();
+            bt_start.Enabled = clb_files.Items.Count > 0;
         }
 
         protected void SetCheckedListBox()
@@ -56,8 +56,8 @@ namespace CsvTransformer
             var pattern = tb_file_filter.Text;
             if (pattern == "") pattern = "*.csv";
             clb_files.Items.Clear();
+            if (!Directory.Exists(tb_csv_dir.Text)) return;
             var dir = new DirectoryInfo(tb_csv_dir.Text);
-            if (!dir.Exists) return;
             if (cb_reg.Checked)
             {
                 var reg = new Regex(pattern);
@@ -67,7 +67,8 @@ namespace CsvTransformer
             }
             else
                 foreach (var fileInfo in dir.GetFiles(pattern))
-                        clb_files.Items.Add(fileInfo.Name);
+                    clb_files.Items.Add(fileInfo.Name);
+            bt_check_all_Click(this, new EventArgs());
         }
 
         protected void SetStartButtonState()
@@ -91,6 +92,13 @@ namespace CsvTransformer
                 process_together_deck(sfd.FileName);
                 timer.Enabled = false;
             }
+            else if (tb_data_name.Text.Contains("%"))
+            {
+                if (sfd.ShowDialog() != DialogResult.OK) return;
+                timer.Enabled = true;
+                process_onefile_seprate_deck(sfd.FileName);
+                timer.Enabled = false;
+            }
             else
             {
                 if (fbd.ShowDialog() != DialogResult.OK) return;
@@ -98,7 +106,7 @@ namespace CsvTransformer
                 process_seperate_deck(fbd.SelectedPath);
                 timer.Enabled = false;
             }
-            MessageBox.Show("处理完成。");
+            MessageBox.Show("处理完成。", "CSV 转换器");
             Application.Exit();
         }
 
@@ -123,6 +131,7 @@ namespace CsvTransformer
             {
                 var stream = new FileStream(file_path, FileMode.Open);
                 var data = reader.ReadStream(stream);
+                stream.Close();
                 if (cb_keep_time.Checked)
                 {
                     time_table.Add(data[0]);
@@ -135,21 +144,43 @@ namespace CsvTransformer
             var file_stream = new FileStream(filename, FileMode.Create);
             var matlab = new MatlabWriter(file_stream);
             matlab.WriteHead();
-            var construct = new MatlabStructuredMatrix
+            matlab.Write(genertate_construct(tb_data_name.Text, value_table));
+            if (cb_keep_time.Checked) matlab.Write(get_super_time_name(""), time_table);
+            matlab.Close();
+        }
+
+        private void process_onefile_seprate_deck(string filename)
+        {
+            reader = new CsvReader();
+            var file_list = get_file_list();
+            pb_all.Maximum = file_list.Count;
+            all_progrss = 0;
+            var matlab_writer = new MatlabWriter(new FileStream(filename, FileMode.Create));
+            matlab_writer.WriteHead();
+            foreach (var file_path in file_list)
             {
-                Name = new MatlabStructName(tb_data_name.Text),
-                Size = new MatlabSize(value_table[0].Count, value_table.Count),
-                Value = new MatlabDoubleMatrix(value_table)
-            };
-            matlab.Write(construct);
-            if (!cb_keep_time.Checked) return;
-            construct = new MatlabStructuredMatrix
-            {
-                Name = new MatlabStructName("time_table"),
-                Size = new MatlabSize(time_table.Count, time_table[0].Count),
-                Value = new MatlabDoubleMatrix(time_table)
-            };
-            matlab.Write(construct);
+                var name = Path.GetFileNameWithoutExtension(file_path);
+                var input_file_stream = new FileStream(file_path, FileMode.Open);
+                var table = reader.ReadStream(input_file_stream);
+                input_file_stream.Close();
+                matlab_writer.Write(genertate_construct(get_super_data_name(name), new List<List<double>> { cb_keep_time.Checked ? table[1] : table[0] }));
+                if (cb_keep_time.Checked) matlab_writer.Write(genertate_construct(get_super_time_name(name), new List<List<double>> { table[0] }));
+                all_progrss += 1;
+            }
+            matlab_writer.Close();
+        }
+
+        private string get_super_data_name(string name)
+        {
+            return tb_data_name.Text.Replace("%", name).Replace("-", "_").Replace(" ", "_");
+        }
+
+        private string get_super_time_name(string name)
+        {
+            if (tb_data_name.Text.Contains("%"))
+                return "time_table_" + name.Replace("-", "_").Replace(" ", "_");
+            else
+                return "time_table";
         }
         
         private void process_seperate_deck(string dirname)
@@ -157,17 +188,21 @@ namespace CsvTransformer
             reader = new CsvReader();
             var file_list = get_file_list();
             pb_all.Maximum = file_list.Count;
+            all_progrss = 0;
             foreach (var file_path in file_list)
             {
                 var name = Path.GetFileNameWithoutExtension(file_path);
-                var matlab_name = Path.Combine(dirname, name);
+                var matlab_name = Path.Combine(dirname, name) + ".mat";
                 var stream = new FileStream(file_path, FileMode.Open);
-                var value_table = reader.ReadStream(stream);
+                var table = reader.ReadStream(stream);
                 stream.Close();
                 stream = new FileStream(matlab_name, FileMode.Create);
                 var matlab_writer = new MatlabWriter(stream);
                 matlab_writer.WriteHead();
-                var value_construct = genertate_construct(tb_data_name.Text, cb_keep_time.Checked ? );
+                matlab_writer.Write(genertate_construct(tb_data_name.Text, new List<List<double>> { cb_keep_time.Checked ? table[1] : table[0] }));
+                if (cb_keep_time.Checked) matlab_writer.Write(genertate_construct(get_super_time_name(name), new List<List<double>> { table[0] }));
+                matlab_writer.Close();
+                all_progrss += 1;
             }
         }
 
@@ -175,7 +210,7 @@ namespace CsvTransformer
         {
             return new MatlabStructuredMatrix
             {
-                Name = new MatlabStructName("name"),
+                Name = new MatlabStructName(name),
                 Size = new MatlabSize(value.Count, value[0].Count),
                 Value = new MatlabDoubleMatrix(value)
             };
@@ -186,6 +221,16 @@ namespace CsvTransformer
             if (reader != null)
                 lb_data.Text = $"Reading {reader.Process}";
             pb_all.Value = all_progrss;
+        }
+
+        private void cb_merge_file_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cb_keep_time_CheckedChanged(object sender, EventArgs e)
+        {
+            nud_row_start.Value = cb_keep_time.Checked ? 3 : 4;
         }
     }
 }

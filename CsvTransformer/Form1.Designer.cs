@@ -1,6 +1,6 @@
 ﻿namespace CsvTransformer
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -204,6 +204,7 @@
             // 
             this.cb_keep_left.AutoSize = true;
             this.cb_keep_left.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cb_keep_left.Enabled = false;
             this.cb_keep_left.Location = new System.Drawing.Point(3, 3);
             this.cb_keep_left.Name = "cb_keep_left";
             this.cb_keep_left.Size = new System.Drawing.Size(137, 17);
@@ -221,6 +222,7 @@
             this.cb_keep_time.TabIndex = 1;
             this.cb_keep_time.Text = "保留时间信息";
             this.cb_keep_time.UseVisualStyleBackColor = true;
+            this.cb_keep_time.CheckedChanged += new System.EventHandler(this.cb_keep_time_CheckedChanged);
             // 
             // flowLayoutPanel1
             // 
@@ -300,7 +302,7 @@
             this.nud_row_start.Size = new System.Drawing.Size(82, 21);
             this.nud_row_start.TabIndex = 1;
             this.nud_row_start.Value = new decimal(new int[] {
-            3,
+            4,
             0,
             0,
             0});
@@ -319,15 +321,14 @@
             // cb_merge_file
             // 
             this.cb_merge_file.AutoSize = true;
-            this.cb_merge_file.Checked = true;
-            this.cb_merge_file.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_merge_file.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cb_merge_file.Location = new System.Drawing.Point(146, 3);
             this.cb_merge_file.Name = "cb_merge_file";
             this.cb_merge_file.Size = new System.Drawing.Size(137, 17);
             this.cb_merge_file.TabIndex = 4;
-            this.cb_merge_file.Text = "合并文件";
+            this.cb_merge_file.Text = "合并数据";
             this.cb_merge_file.UseVisualStyleBackColor = true;
+            this.cb_merge_file.CheckedChanged += new System.EventHandler(this.cb_merge_file_CheckedChanged);
             // 
             // panel1
             // 
@@ -347,7 +348,7 @@
             this.tb_data_name.Name = "tb_data_name";
             this.tb_data_name.Size = new System.Drawing.Size(85, 21);
             this.tb_data_name.TabIndex = 1;
-            this.tb_data_name.Text = "Data";
+            this.tb_data_name.Text = "data_%";
             this.tb_data_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label10
@@ -498,9 +499,10 @@
             // 
             // timer
             // 
+            this.timer.Interval = 10;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -509,7 +511,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "CSV Transformer";
