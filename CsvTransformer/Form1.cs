@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using CsvTransformer.csv;
 using CsvTransformer.matlab;
 
@@ -21,16 +18,16 @@ namespace CsvTransformer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var stream = new System.IO.FileStream("hello.mat", System.IO.FileMode.Create);
-            var writer = new matlab.MatlabWriter(stream);
+            var stream = new FileStream("hello.mat", FileMode.Create);
+            var writer = new MatlabWriter(stream);
             writer.WriteHead();
-            var Struct = new matlab.MatlabStructuredMatrix()
+            var Struct = new MatlabStructuredMatrix
             {
-                //Name = new matlab.MatlabStructName() { Value = "aaaa" },
-                //Size = new matlab.MatlabSize() { Width = 1, Height = 5 },
-                //Value = new matlab.MatlabDoubleMatrix() { Value = new List<double>() { 1.23456789,2,3,4,5 } }
+                Name = new MatlabStructName("FuckMatlab"),
+                Size = new MatlabSize(3, 4),
+                Value = new MatlabDoubleMatrix(new List<double> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20})
             };
-            //writer.Write(Struct);
+            writer.Write(Struct);
             writer.Close();
         }
 
@@ -59,11 +56,11 @@ namespace CsvTransformer
             var pattern = tb_file_filter.Text;
             if (pattern == "") pattern = "*.csv";
             clb_files.Items.Clear();
-            var dir = new System.IO.DirectoryInfo(tb_csv_dir.Text);
+            var dir = new DirectoryInfo(tb_csv_dir.Text);
             if (!dir.Exists) return;
             if (cb_reg.Checked)
             {
-                var reg = new System.Text.RegularExpressions.Regex(pattern);
+                var reg = new Regex(pattern);
                 foreach (var fileInfo in dir.GetFiles("*"))
                     if (reg.Match(fileInfo.Name).Success)
                         clb_files.Items.Add(fileInfo.Name);
@@ -101,16 +98,18 @@ namespace CsvTransformer
                 process_seperate_deck(fbd.SelectedPath);
                 timer.Enabled = false;
             }
+            MessageBox.Show("处理完成。");
+            Application.Exit();
         }
 
         private List<string> get_file_list()
         {
             return clb_files.CheckedItems.OfType<string>()
-                .Select(filename => System.IO.Path.Combine(tb_csv_dir.Text, filename))
+                .Select(filename => Path.Combine(tb_csv_dir.Text, filename))
                 .ToList();
         }
 
-        public int all_progrss = 0;
+        public int all_progrss;
 
         private void process_together_deck(string filename)
         {
@@ -119,9 +118,10 @@ namespace CsvTransformer
             var value_table = new List<List<double>>();
             var file_list = get_file_list();
             pb_all.Maximum = file_list.Count;
+            all_progrss = 0;
             foreach (var file_path in file_list)
             {
-                var stream = new System.IO.FileStream(file_path, FileMode.Open);
+                var stream = new FileStream(file_path, FileMode.Open);
                 var data = reader.ReadStream(stream);
                 if (cb_keep_time.Checked)
                 {
@@ -134,15 +134,16 @@ namespace CsvTransformer
             }
             var file_stream = new FileStream(filename, FileMode.Create);
             var matlab = new MatlabWriter(file_stream);
-            var construct = new MatlabStructuredMatrix()
+            matlab.WriteHead();
+            var construct = new MatlabStructuredMatrix
             {
                 Name = new MatlabStructName(tb_data_name.Text),
-                Size = new MatlabSize(value_table.Count, value_table[0].Count),
+                Size = new MatlabSize(value_table[0].Count, value_table.Count),
                 Value = new MatlabDoubleMatrix(value_table)
             };
             matlab.Write(construct);
             if (!cb_keep_time.Checked) return;
-            construct = new MatlabStructuredMatrix()
+            construct = new MatlabStructuredMatrix
             {
                 Name = new MatlabStructName("time_table"),
                 Size = new MatlabSize(time_table.Count, time_table[0].Count),
@@ -153,7 +154,31 @@ namespace CsvTransformer
         
         private void process_seperate_deck(string dirname)
         {
-            
+            reader = new CsvReader();
+            var file_list = get_file_list();
+            pb_all.Maximum = file_list.Count;
+            foreach (var file_path in file_list)
+            {
+                var name = Path.GetFileNameWithoutExtension(file_path);
+                var matlab_name = Path.Combine(dirname, name);
+                var stream = new FileStream(file_path, FileMode.Open);
+                var value_table = reader.ReadStream(stream);
+                stream.Close();
+                stream = new FileStream(matlab_name, FileMode.Create);
+                var matlab_writer = new MatlabWriter(stream);
+                matlab_writer.WriteHead();
+                var value_construct = genertate_construct(tb_data_name.Text, cb_keep_time.Checked ? );
+            }
+        }
+
+        private MatlabStructuredMatrix genertate_construct(string name, List<List<double>> value)
+        {
+            return new MatlabStructuredMatrix
+            {
+                Name = new MatlabStructName("name"),
+                Size = new MatlabSize(value.Count, value[0].Count),
+                Value = new MatlabDoubleMatrix(value)
+            };
         }
 
         private void timer_Tick(object sender, EventArgs e)

@@ -24,7 +24,7 @@ namespace CsvTransformer.matlab
 
         public override int Type => 9;
 
-        public override int InnerLength => Value.Count * 8;
+        public override int InnerLength => Value.Count == 0 ? 0 : Value.Count * Value[0].Count * 8;
 
         public override int AllLength => InnerLength + 8;
 

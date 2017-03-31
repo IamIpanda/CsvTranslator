@@ -25,11 +25,11 @@ namespace CsvTransformer.csv
                 j++;
             });
             Process = 0;
-            while (stream.Position <= stream.Length)
+            while (!reader.EndOfStream)
             {
                 Process += 1;
                 j = 0;
-                Readline(reader, start_column).ForEach(number =>
+                Readline(reader, start_column)?.ForEach(number =>
                 {
                     answer[j].Add(number);
                     j++;

@@ -9,7 +9,7 @@ namespace CsvTransformer.matlab
     {
         public override int Type => 14;
 
-        public override int InnerLength => Value.AllLength + 48;
+        public override int InnerLength => Value.AllLength + Name.AllLength + 32;
 
         public override int AllLength => InnerLength;
 

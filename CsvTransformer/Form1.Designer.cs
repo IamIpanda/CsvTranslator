@@ -487,6 +487,15 @@
             this.lb_data.TabIndex = 12;
             this.lb_data.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // sfd
+            // 
+            this.sfd.Filter = "Matlab数据文件|*.mat|所有文件|*.*";
+            this.sfd.Title = "请选择数据文件保存位置";
+            // 
+            // fbd
+            // 
+            this.fbd.Description = "请选择保存的目标文件夹";
+            // 
             // timer
             // 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
